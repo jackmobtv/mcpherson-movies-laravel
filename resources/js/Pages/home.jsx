@@ -1,13 +1,28 @@
 import {useEffect} from "react";
+import "../../css/home.css"
 
-export default function home({myVar}) {
+export default function home({id, title, poster, plot}) {
     useEffect(() => {
         document.title = "Home";
     }, []);
 
     return (
         <>
-            <h1>{myVar}</h1>
+            <div>
+                <div className="row justify-content-center">
+                    <div className="col-12">
+                        <div className="custom-background text-center">
+                            <h1 className="text-white">Featured Movie</h1>
+                            <img src={poster} alt="poster" className="img-fluid"
+                                 id="poster"/>
+                            <h3 className="text-white mt-4">{title}</h3>
+                            <p className="text-white mx-auto"
+                               id="plot">{plot}</p>
+                            <a className="btn btn-primary" href={"/view-movies?id=" + {id}}>View Movie</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

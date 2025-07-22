@@ -1,0 +1,36 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+.custom-background {
+    background-color: grey;
+    padding: 20px;
+}
+
+/*@media only screen and (min-width: 769px) {
+    img {
+        height: 15%;
+        width: 15%;
+    }
+}
+@media only screen and (max-width: 769px) {
+    img {
+        height: 50%;
+        width: 50%;
+    }
+}*/
+
+p {
+    word-wrap: break-word;
+}
+
+#plot {
+    max-width: 600px;
+}
+
+#poster {
+    height: 15%;
+    width: 15%;
+}
