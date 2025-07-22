@@ -10,7 +10,7 @@ use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function home() : Response
+    public function Home() : Response
     {
         $Attributes = [];
 

@@ -1,5 +1,6 @@
 import {useEffect} from "react";
 import "../../css/home.css"
+import Layout from "../components/Layout.jsx";
 
 export default function home({id, title, poster, plot}) {
     useEffect(() => {
@@ -7,7 +8,7 @@ export default function home({id, title, poster, plot}) {
     }, []);
 
     return (
-        <>
+        <Layout>
             <div>
                 <div className="row justify-content-center">
                     <div className="col-12">
@@ -23,7 +24,7 @@ export default function home({id, title, poster, plot}) {
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     );
 }
 
