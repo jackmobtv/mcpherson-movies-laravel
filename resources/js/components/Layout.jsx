@@ -2,6 +2,9 @@ import {useEffect, useState} from "react";
 
 export default function Layout({children}) {
     const appURL = window.REACT_APP.APP_URL;
+    const flashMessageSuccess = window.REACT_APP.FLASH_MESSAGE_SUCCESS;
+    const flashMessageWarning = window.REACT_APP.FLASH_MESSAGE_WARNING;
+    const flashMessageDanger = window.REACT_APP.FLASH_MESSAGE_DANGER;
 
     // Initialize theme based on localStorage or system preference
     const getInitialTheme = () => {
@@ -71,12 +74,22 @@ export default function Layout({children}) {
                 </div>
             </nav>
             <div className="container">
-                <div className="alert alert-success my-2"
-                     role="alert"></div>
-                <div className="alert alert-danger my-2"
-                     role="alert"></div>
-                <div className="alert alert-warning my-2"
-                     role="alert"></div>
+                {(flashMessageSuccess != null && flashMessageSuccess !== '') &&
+                    <div className="alert alert-success my-2" role="alert">
+                        {flashMessageSuccess}
+                    </div>
+                }
+                {(flashMessageWarning != null && flashMessageWarning !== '') &&
+                    <div className="alert alert-warning my-2" role="alert">
+                        {flashMessageWarning}
+                    </div>
+                }
+
+                {(flashMessageDanger != null && flashMessageDanger !== '') &&
+                    <div className="alert alert-danger my-2" role="alert">
+                        {flashMessageSuccess}
+                    </div>
+                }
             </div>
 
             {children}

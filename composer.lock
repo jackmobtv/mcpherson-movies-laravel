@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2422c422a0f93fe2c697e064ae6ca16",
+    "content-hash": "a7ab8bd7676c521539f469809c37cf3a",
     "packages": [
         {
             "name": "brick/math",
@@ -3389,6 +3389,92 @@
                 "source": "https://github.com/SergeyTsalkov/meekrodb/tree/v3.1.4"
             },
             "time": "2025-06-26T04:17:05+00:00"
+        },
+        {
+            "name": "smorken/ext-http",
+            "version": "v5.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/scott_morken/laravel-ext-http.git",
+                "reference": "1b6e8315e479e284740141ed1a4ded47bbf55d0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/scott_morken/laravel-ext-http/get/1b6e8315e479e284740141ed1a4ded47bbf55d0a.zip",
+                "reference": "1b6e8315e479e284740141ed1a4ded47bbf55d0a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "smorken/sanitizer": "~5.0"
+            },
+            "require-dev": {
+                "laravel/framework": "5.1.*",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Smorken\\Ext\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Scott Morken",
+                    "email": "scott.morken@phoenixcollege.edu"
+                }
+            ],
+            "description": "HTTP extension for Laravel 5.1",
+            "homepage": "https://bitbucket.org/scott_morken/laravel-ext-http",
+            "support": {
+                "source": "https://bitbucket.org/scott_morken/laravel-ext-http/src/1b6e8315e479e284740141ed1a4ded47bbf55d0a/?at=v5.0.6"
+            },
+            "abandoned": true,
+            "time": "2017-06-12T17:57:39+00:00"
+        },
+        {
+            "name": "smorken/sanitizer",
+            "version": "v5.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/scott_morken/laravel-sanitizer.git",
+                "reference": "e68b92d26c2fb29b356867191c8128945a4afb27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/scott_morken/laravel-sanitizer/get/e68b92d26c2fb29b356867191c8128945a4afb27.zip",
+                "reference": "e68b92d26c2fb29b356867191c8128945a4afb27",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Smorken\\Sanitizer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Scott Morken",
+                    "email": "scott.morken@phoenixcollege.edu"
+                }
+            ],
+            "time": "2016-04-01T16:07:06+00:00"
         },
         {
             "name": "symfony/clock",

@@ -15,10 +15,10 @@ class HomeController extends Controller
         $Attributes = [];
 
         $movie = MovieDAO::GetRandomMovie();
-        $movieData = OMDB::GetMovieData($movie->title);
+        $movieData = OMDB::GetMovieData($movie->getTitle());
 
-        $Attributes['id'] = $movie->movie_id;
-        $Attributes['title'] = $movie->title;
+        $Attributes['id'] = $movie->getTitle();
+        $Attributes['title'] = $movie->getTitle();
         $Attributes['poster'] = $movieData['poster'];
         $Attributes['plot'] = $movieData['plot'];
 

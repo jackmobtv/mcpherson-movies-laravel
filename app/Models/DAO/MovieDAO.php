@@ -22,13 +22,13 @@ class MovieDAO
         foreach ($result as $row) {
             $movie = new Movie();
 
-            $movie->movie_id = $row["movie_id"];
-            $movie->title = $row["title"];
-            $movie->genre = $row["genre"];
-            $movie->sub_genre = ($row["sub_genre"] == null) ? "" : $row["sub_genre"];
-            $movie->release_year = ($row["release_year"] == null) ? 0 : $row["release_year"];
-            $movie->location_name = $row["location_name"];
-            $movie->format_name = $row["format_name"];
+            $movie->setMovieId($row["movie_id"]);
+            $movie->setTitle($row["title"]);
+            $movie->setGenre($row["genre"]);
+            $movie->setSubGenre(($row["sub_genre"] == null) ? "" : $row["sub_genre"]);
+            $movie->setReleaseYear(($row["release_year"] == null) ? 0 : $row["release_year"]);
+            $movie->setLocationName($row["location_name"]);
+            $movie->setFormatName($row["format_name"]);
 
             $movies[] = $movie;
         }
@@ -47,13 +47,13 @@ class MovieDAO
         $result = $conn->query("CALL sp_get_movie_by_id(%s)", $id);
 
         try {
-            $movie->movie_id = $result[0]["movie_id"];
-            $movie->title = $result[0]["title"];
-            $movie->genre = $result[0]["genre"];
-            $movie->sub_genre = ($result[0]["sub_genre"] == null) ? "" : $result[0]["sub_genre"];
-            $movie->release_year = ($result[0]["release_year"] == null) ? 0 : $result[0]["release_year"];
-            $movie->location_name = $result[0]["location_name"];
-            $movie->format_name = $result[0]["format_name"];
+            $movie->setMovieId($result[0]["movie_id"]);
+            $movie->setTitle($result[0]["title"]);
+            $movie->setGenre($result[0]["genre"]);
+            $movie->setSubGenre(($result[0]["sub_genre"] == null) ? "" : $result[0]["sub_genre"]);
+            $movie->setReleaseYear(($result[0]["release_year"] == null) ? 0 : $result[0]["release_year"]);
+            $movie->setLocationName($result[0]["location_name"]);
+            $movie->setFormatName($result[0]["format_name"]);
         } catch (Exception) {
             return null;
         } finally {
@@ -93,29 +93,6 @@ class MovieDAO
         }
     }
 
-    public static function AddMovie(Movie $movie): bool
-    {
-        $conn = MySQLConnect::GetConnection();
-
-        try {
-            $conn->insert('movies', [
-                "movie_id" => self::GetLastID(),
-                "title" => $movie->title,
-                "genre" => $movie->genre,
-                "sub_genre" => $movie->sub_genre,
-                "release_year" => $movie->release_year,
-                "location_id" => $movie->location_id,
-                "format_id" => $movie->format_id
-            ]);
-
-            return $conn->affected_rows > 0;
-        } catch (Exception $ex) {
-            dd($ex);
-        } finally {
-            $conn->disconnect();
-        }
-    }
-
     public static function GetRandomMovie(): ?Movie
     {
         $conn = MySQLConnect::GetConnection();
@@ -125,19 +102,19 @@ class MovieDAO
         $movie = new Movie();
 
         try {
-            $movie->movie_id = $result[0]["movie_id"];
-            $movie->title = $result[0]["title"];
-            $movie->genre = $result[0]["genre"];
-            $movie->sub_genre = $result[0]["sub_genre"];
-            $movie->release_year = $result[0]["release_year"];
-            $movie->location_name = $result[0]["location_name"];
-            $movie->format_name = $result[0]["format_name"];
+            $movie->setMovieId($result[0]["movie_id"]);
+            $movie->setTitle($result[0]["title"]);
+            $movie->setGenre($result[0]["genre"]);
+            $movie->setSubGenre($result[0]["sub_genre"]);
+            $movie->setReleaseYear($result[0]["release_year"]);
+            $movie->setLocationName($result[0]["location_name"]);
+            $movie->setFormatName($result[0]["format_name"]);
 
-            if($movie->genre == null){
-                $movie->genre = "";
+            if($movie->getGenre() == null){
+                $movie->setGenre("");
             }
-            if($movie->sub_genre == null){
-                $movie->sub_genre = "";
+            if($movie->getSubGenre() == null){
+                $movie->setSubGenre("");
             }
 
             return $movie;
