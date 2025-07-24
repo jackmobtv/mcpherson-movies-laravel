@@ -1,3 +1,11 @@
+<?php
+$user = session('currentUser');
+
+if($user != null){
+    $dataJson = $user->serialize();
+}
+?>
+
 <!DOCTYPE html>
 <html data-bs-theme="dark">
 <head>
@@ -27,7 +35,8 @@
             APP_URL: "{{ env('APP_URL') }}",
             FLASH_MESSAGE_SUCCESS: "{{ session()->remove('flashMessageSuccess') }}",
             FLASH_MESSAGE_WARNING: "{{ session()->remove('flashMessageWarning') }}",
-            FLASH_MESSAGE_DANGER: "{{ session()->remove('flashMessageDanger') }}"
+            FLASH_MESSAGE_DANGER: "{{ session()->remove('flashMessageDanger') }}",
+            CURRENT_USER: {!! isset($dataJson) ? $dataJson : '{}' !!}
         }
     </script>
 

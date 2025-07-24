@@ -3,6 +3,8 @@ import "../../css/home.css"
 import Layout from "../components/Layout.jsx";
 
 export default function home({id, title, poster, plot}) {
+    const appURL = window.REACT_APP.APP_URL;
+
     useEffect(() => {
         document.title = "Home";
     }, []);

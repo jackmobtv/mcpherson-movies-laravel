@@ -5,6 +5,7 @@ export default function Layout({children}) {
     const flashMessageSuccess = window.REACT_APP.FLASH_MESSAGE_SUCCESS;
     const flashMessageWarning = window.REACT_APP.FLASH_MESSAGE_WARNING;
     const flashMessageDanger = window.REACT_APP.FLASH_MESSAGE_DANGER;
+    const currentUser = window.REACT_APP.CURRENT_USER;
 
     // Initialize theme based on localStorage or system preference
     const getInitialTheme = () => {
@@ -67,8 +68,17 @@ export default function Layout({children}) {
                             </li>
                         </ul>
                         <div className="d-lg-flex col-lg-3 justify-content-lg-end">
-                            <a href={appURL + "/login"} className="btn btn-outline-primary me-2">Login</a>
-                            <a href={appURL + "/signup"} className="btn btn-outline-success">Sign Up</a>
+                            {Object.keys(currentUser).length === 0 ? (
+                                <>
+                                    <a href={appURL + "/login"} className="btn btn-outline-primary me-2">Login</a>
+                                    <a href={appURL + "/signup"} className="btn btn-outline-success">Sign-Up</a>
+                                </>
+                            ) : (
+                                <>
+                                    <a href={appURL + "/logout"} className="btn btn-outline-primary me-2">Sign Out</a>
+                                    <a href={appURL + "/favorites"} className="btn btn-outline-success">My Profile</a>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -87,7 +97,7 @@ export default function Layout({children}) {
 
                 {(flashMessageDanger != null && flashMessageDanger !== '') &&
                     <div className="alert alert-danger my-2" role="alert">
-                        {flashMessageSuccess}
+                        {flashMessageDanger}
                     </div>
                 }
             </div>

@@ -31,7 +31,7 @@ class UserController extends Controller
         if(!Validators::isStrongPassword(request('password'))){
             $errorFound = true;
             $Attributes['password'] = request('password');
-            $Attributes['password1Error'] = "Invalid Password";
+            $Attributes['password1Error'] = "Password must between 7 and 20 characters long";
         }
 
         if(request('password') != request('password-conf')){
@@ -54,5 +54,25 @@ class UserController extends Controller
 
         session()->put('flashMessageSuccess', "User Successfully Created, Please Login");
         return redirect("/login");
+    }
+
+    public function Login_Get() : Response
+    {
+        return Inertia::render('users/login');
+    }
+
+    public function Login_Post() : RedirectResponse | Redirector | Response
+    {
+        $user = UserDAO::auth(request('email'), request('password'));
+
+        if($user == null){
+            session()->put('flashMessageDanger', "Invalid Email or Password");
+            return redirect("/login");
+        }
+
+        session()->put('currentUser', $user);
+        session()->put('flashMessageSuccess', "Login Successful");
+
+        return redirect("/");
     }
 }

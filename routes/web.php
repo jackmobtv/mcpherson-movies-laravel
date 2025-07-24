@@ -11,4 +11,7 @@ Route::controller(HomeController::class)->group(function (){
 Route::controller(UserController::class)->group(function (){
     Route::get('/signup', 'SignUp_Get')->name('SignUp');
     Route::post('/signup', 'SignUp_Post')->name('SignUp_Post');
+
+    Route::get('/login', 'Login_Get')->name('Login');
+    Route::post('/login', 'Login_Post')->name('Login_Post');
 });
