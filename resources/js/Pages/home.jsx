@@ -1,6 +1,6 @@
 import {useEffect} from "react";
-import "../../css/home.css"
-import Layout from "../components/Layout.jsx";
+import "@src/css/home.css"
+import Layout from "@src/js/components/Layout.jsx";
 
 export default function home({id, title, poster, plot}) {
     const appURL = window.REACT_APP.APP_URL;

@@ -15,4 +15,9 @@ export default defineConfig({
     ssr: {
         noExternal: ['@inertiajs/server']
     },
+    resolve: {
+        alias: {
+            '@src': '/resources'
+        }
+    },
 });

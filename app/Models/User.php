@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use JsonSerializable;
 
 #[AllowDynamicProperties]
-class User
+class User implements JsonSerializable
 {
     private int $userId;
     private string $firstName;
@@ -193,5 +193,10 @@ class User
         ];
 
         return json_encode($serializedData);
+    }
+
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
     }
 }

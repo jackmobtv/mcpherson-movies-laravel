@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Layout from "@/components/Layout.jsx";
+import Layout from "@src/js/components/Layout.jsx";
 
 export default function login() {
     const appURL = window.REACT_APP.APP_URL;

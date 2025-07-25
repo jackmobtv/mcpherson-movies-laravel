@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use AllowDynamicProperties;
+use JsonSerializable;
 
 #[AllowDynamicProperties]
-class Movie {
+class Movie implements JsonSerializable {
     private string $movie_id;
     private string $title;
     private string $genre;
@@ -106,5 +107,10 @@ class Movie {
     public function setFormatName(string $format_name): void
     {
         $this->format_name = $format_name;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
     }
 }

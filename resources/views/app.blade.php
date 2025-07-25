@@ -2,7 +2,7 @@
 $user = session('currentUser');
 
 if($user != null){
-    $dataJson = $user->serialize();
+    $dataJson = json_encode($user->jsonSerialize());
 }
 ?>
 

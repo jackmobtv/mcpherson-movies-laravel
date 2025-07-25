@@ -70,9 +70,17 @@ class UserController extends Controller
             return redirect("/login");
         }
 
+        session()->invalidate();
         session()->put('currentUser', $user);
         session()->put('flashMessageSuccess', "Login Successful");
 
+        return redirect("/");
+    }
+
+    public function Logout() : RedirectResponse | Redirector | Response
+    {
+        session()->invalidate();
+        session()->put('flashMessageSuccess', "Logout Successful");
         return redirect("/");
     }
 }
