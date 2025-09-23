@@ -21,4 +21,5 @@ Route::controller(UserController::class)->group(function (){
 
 Route::controller(MovieController::class)->group(function (){
     Route::get('/movies', 'Movies')->name('Movies');
+    Route::get('/view-movie', 'View_Movie')->name('View Movie');
 });

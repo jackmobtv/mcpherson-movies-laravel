@@ -94,7 +94,6 @@ export default function Layout({children}) {
                         {flashMessageWarning}
                     </div>
                 }
-
                 {(flashMessageDanger != null && flashMessageDanger !== '') &&
                     <div className="alert alert-danger my-2" role="alert">
                         {flashMessageDanger}

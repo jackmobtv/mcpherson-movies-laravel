@@ -15,6 +15,11 @@ export default function signup({
 
     useEffect(() => {
         document.title = "Sign Up";
+
+        const appDiv = document.getElementById('app');
+        if (appDiv) {
+            appDiv.removeAttribute('data-page');
+        }
     }, []);
 
     return (

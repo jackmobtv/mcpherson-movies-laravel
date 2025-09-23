@@ -45,7 +45,7 @@ export default function movies({moviesJSON}) {
                                 {movies.map((movie) => (
                                     <tr key={movie.movie_id}>
                                         <td className="align-middle">
-                                            <a href={appURL + "/view-movies?id=" + movie.movie_id}>{movie.title}</a>
+                                            <a href={appURL + "/view-movie?id=" + movie.movie_id}>{movie.title}</a>
                                         </td>
                                         <td className="align-middle">{movie.genre}</td>
                                         <td className="align-middle">{movie.release_year === 0 ? "" : movie.release_year}</td>

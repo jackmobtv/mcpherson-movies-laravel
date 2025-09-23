@@ -8,6 +8,11 @@ export default function login() {
 
     useEffect(() => {
         document.title = "Login";
+
+        const appDiv = document.getElementById('app');
+        if (appDiv) {
+            appDiv.removeAttribute('data-page');
+        }
     }, []);
 
     return (

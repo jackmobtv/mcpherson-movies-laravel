@@ -7,6 +7,11 @@ export default function home({id, title, poster, plot}) {
 
     useEffect(() => {
         document.title = "Home";
+
+        const appDiv = document.getElementById('app');
+        if (appDiv) {
+            appDiv.removeAttribute('data-page');
+        }
     }, []);
 
     return (
