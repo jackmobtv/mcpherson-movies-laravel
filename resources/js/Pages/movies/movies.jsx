@@ -3,7 +3,8 @@ import Layout from "@src/js/components/Layout.jsx";
 
 export default function movies({moviesJSON}) {
     const appURL = window.REACT_APP.APP_URL;
-    const movies = JSON.parse(moviesJSON);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const movies = moviesJSON === undefined ? null : JSON.parse(moviesJSON);
 
     useEffect(() => {
         document.title = "Movies";
@@ -19,8 +20,7 @@ export default function movies({moviesJSON}) {
             <div className="container py-4">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Movies</h2>
-                    <a href={appURL + "/add-movies"} className="btn btn-warning float-right mx-2" role="button">Add
-                        Movie</a>
+                    <a href={appURL + "/add-movie"} className="btn btn-warning float-right mx-2" role="button">Add Movie</a>
                 </div>
                 <div className="col d-flex justify-content-between align-items-center">
                     <button className="btn btn-primary d-lg-none mb-2" type="button" data-bs-toggle="offcanvas"

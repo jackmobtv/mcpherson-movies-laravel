@@ -7,7 +7,7 @@ use JsonSerializable;
 
 #[AllowDynamicProperties]
 class Movie implements JsonSerializable {
-    private string $movie_id;
+    private int $movie_id;
     private string $title;
     private string $genre;
     private ?string $sub_genre;
@@ -19,12 +19,12 @@ class Movie implements JsonSerializable {
 
     public function __construct(){}
 
-    public function getMovieId(): string
+    public function getMovieId(): int
     {
         return $this->movie_id;
     }
 
-    public function setMovieId(string $movie_id): void
+    public function setMovieId(int $movie_id): void
     {
         $this->movie_id = $movie_id;
     }
@@ -112,5 +112,14 @@ class Movie implements JsonSerializable {
     public function jsonSerialize(): array
     {
         return get_object_vars($this);
+    }
+
+    public static function SerializeArray(array $movies): array
+    {
+        $serializedMovies = [];
+        foreach ($movies as $movie) {
+            $serializedMovies[] = $movie->jsonSerialize();
+        }
+        return $serializedMovies;
     }
 }
