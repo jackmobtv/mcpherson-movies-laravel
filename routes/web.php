@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function (){
     Route::get('/', 'Home')->name('Home');
+    Route::get('/about', 'About')->name('About');
+    Route::get('/terms', 'Terms')->name('Terms');
+
+    Route::get('/pricing', 'Pricing_Get')->name('Pricing_Get');
+    Route::post('/pricing', 'Pricing_Post')->name('Pricing_Post');
 });
 
 Route::controller(UserController::class)->group(function (){
@@ -23,18 +28,24 @@ Route::controller(UserController::class)->group(function (){
 Route::controller(MovieController::class)->group(function (){
     Route::get('/movies', 'Movies')->name('Movies');
     Route::get('/view-movie', 'View_Movie')->name('View_Movie');
+
     Route::get('/add-movie', 'Add_Movie_Get')->name('Add_Movie_Get');
     Route::post('/add-movie', 'Add_Movie_Post')->name('Add_Movie_Post');
+
     Route::get('/update-movie', 'Update_Movie_Get')->name('Update_Movie');
     Route::post('/update-movie', 'Update_Movie_Post')->name('Update_Movie_Post');
+
     Route::post('/delete-movie', 'Delete_Movie_Post')->name('Delete_Movie_Post');
 });
 
 Route::controller(ActorController::class)->group(function (){
     Route::get('/actors', 'Actors')->name('Actors');
     Route::get('/view-actor', 'View_Actor')->name('View_Actor');
-    Route::post('/update-actor', 'Update_Actor_Post')->name('Update_Actor_Post');
+
     Route::post('/add-actor', 'Add_Actor_Post')->name('Add_Actor_Post');
+
+    Route::post('/update-actor', 'Update_Actor_Post')->name('Update_Actor_Post');
+
     Route::post('/delete-movie-actor', 'Remove_Movie_Actor_Post')->name('Remove_Movie_Actor_Post');
     Route::post('/delete-actor', 'Remove_Actor_Post')->name('Remove_Actor_Post');
 });

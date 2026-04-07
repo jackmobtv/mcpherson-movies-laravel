@@ -26,7 +26,7 @@ export default function home({id, title, poster, plot}) {
                             <h3 className="text-white mt-4">{title}</h3>
                             <p className="text-white mx-auto"
                                id="plot">{plot}</p>
-                            <a className="btn btn-primary" href={"/view-movie?id=" + {id}}>View Movie</a>
+                            <a className="btn btn-primary" href={"/view-movie?id=" + id}>View Movie</a>
                         </div>
                     </div>
                 </div>

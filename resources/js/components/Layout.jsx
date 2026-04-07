@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export default function Layout({children}) {
+export default function Layout({children, UserJSON}) {
     const appURL = window.REACT_APP.APP_URL;
     const flashMessageSuccess = window.REACT_APP.FLASH_MESSAGE_SUCCESS;
     const flashMessageWarning = window.REACT_APP.FLASH_MESSAGE_WARNING;
@@ -56,16 +56,20 @@ export default function Layout({children}) {
                             <li className="nav-item">
                                 <a className="nav-link" aria-current="page" href={appURL + "/movies"}>Movies</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" aria-current="page" href={appURL + "/actors"}>Actors</a>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                   aria-expanded="false">Admin</a>
-                                <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href={appURL + "/users"}>Users</a></li>
-                                </ul>
-                            </li>
+                            {(currentUser.privileges === "Premium" || currentUser.privileges === "Admin") &&
+                                <li className="nav-item">
+                                    <a className="nav-link" aria-current="page" href={appURL + "/actors"}>Actors</a>
+                                </li>
+                            }
+                            {(currentUser.privileges === "Admin") &&
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                       aria-expanded="false">Admin</a>
+                                    <ul className="dropdown-menu">
+                                        <li><a className="dropdown-item" href={appURL + "/users"}>Users</a></li>
+                                    </ul>
+                                </li>
+                            }
                         </ul>
                         <div className="d-lg-flex col-lg-3 justify-content-lg-end">
                             {Object.keys(currentUser).length === 0 ? (

@@ -15,7 +15,7 @@ class User implements JsonSerializable
     private string $firstName;
     private string $lastName;
     private string $email;
-    private string $phone;
+    private ?string $phone;
     private string $password;
     private string $language;
     private string $status;
@@ -76,9 +76,9 @@ class User implements JsonSerializable
         return $this->phone;
     }
 
-    public function setPhone(string $phone): void
+    public function setPhone(?string $phone): void
     {
-        if(!Validators::isValidPhone($phone)){
+        if($phone != null && !Validators::isValidPhone($phone)){
             throw new InvalidArgumentException("Invalid phone");
         }
         $this->phone = $phone;

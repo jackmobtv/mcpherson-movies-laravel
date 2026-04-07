@@ -37,7 +37,7 @@ class UserDAO
                 $user->setUserId($result[0]['user_id']);
                 $user->setFirstName($result[0]['first_name']);
                 $user->setLastName($result[0]['last_name']);
-                $user->setPhone($result[0]['phone']);
+                $user->setPhone($result[0]['phone'] == null ? null : $result[0]['phone']);
                 $user->setEmail($email);
                 $user->setLanguage($result[0]['language']);
                 $user->setStatus($result[0]['status']);
@@ -53,8 +53,17 @@ class UserDAO
                 return null;
             }
         } catch (Exception $ex) {
-            dd($ex->getMessage());
             return null;
         }
+    }
+
+    public static function upgrade(int $userId) : bool {
+        $conn = MySQLConnect::GetConnection();
+
+        $conn->query("CALL sp_upgrade_user(%s)", $userId);
+
+        $conn->disconnect();
+
+        return true;
     }
 }
