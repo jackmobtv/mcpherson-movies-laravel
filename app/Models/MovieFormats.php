@@ -4,7 +4,7 @@ namespace App\Models;
 
 use JsonSerializable;
 
-class MovieFormats implements JsonSerializable
+class MovieFormats extends JSONClass
 {
     private int $format_id;
     private string $format_name;
@@ -51,19 +51,5 @@ class MovieFormats implements JsonSerializable
         ];
 
         return json_encode($serializedData);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return get_object_vars($this);
-    }
-
-    public static function SerializeArray(array $formats): array
-    {
-        $serializedFormats = [];
-        foreach ($formats as $format) {
-            $serializedFormats[] = $format->jsonSerialize();
-        }
-        return $serializedFormats;
     }
 }

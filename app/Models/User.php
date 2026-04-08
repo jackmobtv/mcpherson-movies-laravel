@@ -6,17 +6,16 @@ use AllowDynamicProperties;
 use App\Models\shared\Validators;
 use DateTime;
 use InvalidArgumentException;
-use JsonSerializable;
 
 #[AllowDynamicProperties]
-class User implements JsonSerializable
+class User extends JSONClass
 {
     private int $userId;
     private string $firstName;
     private string $lastName;
     private string $email;
     private ?string $phone;
-    private string $password;
+    private ?string $password = null;
     private string $language;
     private string $status;
     private string $privileges;
@@ -193,10 +192,5 @@ class User implements JsonSerializable
         ];
 
         return json_encode($serializedData);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return get_object_vars($this);
     }
 }

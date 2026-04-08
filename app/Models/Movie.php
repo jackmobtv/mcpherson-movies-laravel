@@ -6,16 +6,17 @@ use AllowDynamicProperties;
 use JsonSerializable;
 
 #[AllowDynamicProperties]
-class Movie implements JsonSerializable {
+class Movie extends JSONClass implements JsonSerializable
+{
     private int $movie_id;
     private string $title;
     private string $genre;
-    private ?string $sub_genre;
-    private ?int $release_year;
-    private int $location_id;
-    private int $format_id;
-    private string $location_name;
-    private string $format_name;
+    private ?string $sub_genre = null;
+    private ?int $release_year = null;
+    private ?int $location_id = null;
+    private ?int $format_id = null;
+    private ?string $location_name = null;
+    private ?string $format_name = null;
 
     public function __construct(){}
 
@@ -109,17 +110,20 @@ class Movie implements JsonSerializable {
         $this->format_name = $format_name;
     }
 
-    public function jsonSerialize(): array
+    public function serialize(): string
     {
-        return get_object_vars($this);
-    }
+        $serializedData = [
+            'movie_id' => $this->movie_id,
+            'title' => $this->title,
+            'genre' => $this->genre,
+            'sub_genre' => $this->sub_genre,
+            'release_year' => $this->release_year,
+            'location_id' => $this->location_id,
+            'format_id' => $this->format_id,
+            'location_name' => $this->location_name,
+            'format_name' => $this->format_name
+        ];
 
-    public static function SerializeArray(array $movies): array
-    {
-        $serializedMovies = [];
-        foreach ($movies as $movie) {
-            $serializedMovies[] = $movie->jsonSerialize();
-        }
-        return $serializedMovies;
+        return json_encode($serializedData);
     }
 }

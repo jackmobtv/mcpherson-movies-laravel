@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use JsonSerializable;
-
-class MovieLocation implements JsonSerializable
+class MovieLocation extends JSONClass
 {
     private int $location_id;
     private string $location_name;
@@ -69,19 +67,5 @@ class MovieLocation implements JsonSerializable
         ];
 
         return json_encode($serializedData);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return get_object_vars($this);
-    }
-
-    public static function SerializeArray(array $locations): array
-    {
-        $serializedLocations = [];
-        foreach ($locations as $location) {
-            $serializedLocations[] = $location->jsonSerialize();
-        }
-        return $serializedLocations;
     }
 }

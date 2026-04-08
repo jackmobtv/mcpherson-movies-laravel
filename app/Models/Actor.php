@@ -6,7 +6,7 @@ use AllowDynamicProperties;
 use JsonSerializable;
 
 #[AllowDynamicProperties]
-class Actor implements JSONSerializable
+class Actor extends JSONClass
 {
     private int $actor_id;
     private string $actor_name;
@@ -41,19 +41,5 @@ class Actor implements JSONSerializable
         ];
 
         return json_encode($serializedData);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return get_object_vars($this);
-    }
-
-    public static function SerializeArray(array $actors): array
-    {
-        $serializedActors = [];
-        foreach ($actors as $actor) {
-            $serializedActors[] = $actor->jsonSerialize();
-        }
-        return $serializedActors;
     }
 }
