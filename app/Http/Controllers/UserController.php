@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DAO\FavoriteDAO;
 use App\Models\DAO\UserDAO;
 use App\Models\shared\Validators;
 use Illuminate\Http\RedirectResponse;
@@ -82,5 +83,23 @@ class UserController extends Controller
         session()->invalidate();
         session()->put('flashMessageSuccess', "Logout Successful");
         return redirect("/");
+    }
+
+    public function Favorites() : RedirectResponse | Redirector | Response
+    {
+        $Attributes = [];
+
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user != null && $user->getStatus() == "active") {
+            $favorites = FavoriteDAO::GetFavoriteMovies($user->getUserId());
+
+            $Attributes['favoritesJSON'] = json_encode($favorites);
+
+            return Inertia::render('favorites/favorites', $Attributes);
+        } else {
+            session()->put('flashMessageWarning', "You Must Be Logged In to Access this Page");
+            return redirect('/login');
+        }
     }
 }

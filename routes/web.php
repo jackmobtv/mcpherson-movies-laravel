@@ -23,6 +23,8 @@ Route::controller(UserController::class)->group(function (){
     Route::post('/login', 'Login_Post')->name('Login_Post');
 
     Route::get('/logout', 'Logout')->name('Logout');
+
+    Route::get('/favorites', 'Favorites')->name('Favorites');
 });
 
 Route::controller(MovieController::class)->group(function (){
