@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\DAO\ActorDAO;
 use App\Models\DAO\MovieDAO;
 use App\Models\Movie;
+use App\Models\MovieFormats;
 use App\Models\shared\OMDB;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
@@ -16,14 +18,89 @@ use Inertia\Response;
 
 class MovieController extends Controller
 {
-    public function Movies() : Response
+    public function Movies(Request $request) : Response
     {
         $Attributes = [];
 
-        $movies = MovieDAO::GetAllMovies();
+        $formats = Movie::SerializeArray(MovieDAO::GetAllFormats());
+        $locations = Movie::SerializeArray(MovieDAO::GetAllLocations());
 
+        $limit = 0;
+        try{
+            $limit = intval($request->query('limit'));
+        } catch (Exception){}
+
+        $search = $request->query('search') == null ? "" : $request->query('search');
+        $sort = $request->query('sort') == null ? "" : $request->query('sort');
+
+        $Attributes['search'] = $search;
+        $Attributes['sort'] = $sort;
+        $Attributes['limit'] = $limit;
+        $Attributes['formatsJSON'] = json_encode($formats);
+        $Attributes['locationsJSON'] = json_encode($locations);
+
+        $locationsArr = $request->get('locations');
+        $locationsFilter = "";
+        if ($locationsArr != null && count($locationsArr) > 0) {
+            $locationsFilter = implode(',', $locationsArr);
+        }
+        $Attributes['selectedLocations'] = $locationsFilter;
+
+        $formatsArr = $request->query('formats');
+        $formatsFilter = "";
+        if ($formatsArr != null && count($formatsArr) > 0) {
+            $formatsFilter = implode(',', $formatsArr);
+        }
+        $Attributes['selectedFormats'] = $formatsFilter;
+
+        $totalMovies = MovieDAO::GetMovieCount($formatsFilter, $locationsFilter, $search);
+        $totalPages = 0;
+        if($limit != 0){
+            $totalPages = $totalMovies / $limit;
+
+            if($totalMovies % $limit != 0) {
+                $totalPages++;
+            }
+        }
+
+        $pageStr = $request->query('page');
+        $page = 1;
+        try {
+            $page = intval($pageStr);
+        } catch (Exception){}
+
+        if ($page < 1) {
+            $page = 1;
+        } else if ($page > $totalPages) {
+            $page = $totalPages;
+        }
+
+        $offset = ($page - 1) * $limit;
+
+        $beginPage = 1;
+        $endPage = $totalPages;
+
+        if ($totalPages > 3) {
+            if ($page == 1 || $page == 2) {
+                $endPage = $totalPages == 4 ? 4 : 5;
+            } else if ($page == $totalPages || $page == $totalPages - 1) {
+                $beginPage = (($page == 3 || $page == 4) ? 1 : ($totalPages - 4));
+            } else {
+                $beginPage = $page - 2;
+                $endPage = $page + 2;
+            }
+        }
+
+        $beginPage = max(1, $beginPage);
+        $endPage = min($totalPages, $endPage);
+
+        $Attributes['beginPage'] = $beginPage;
+        $Attributes['endPage'] = $endPage;
+        $Attributes['totalPages'] = $totalPages;
+        $Attributes['totalMovies'] = $totalPages;
+
+        $movies = MovieDAO::GetAllMovieFiltered($offset,$limit,$formatsFilter,$locationsFilter,$search,$sort);
         $movies = Movie::SerializeArray($movies);
-
         $Attributes['moviesJSON'] = json_encode($movies);
 
         return Inertia::render('movies/movies', $Attributes);

@@ -1,10 +1,12 @@
 import {useEffect} from "react";
 import Layout from "@src/js/components/Layout.jsx";
 
-export default function movies({moviesJSON}) {
+export default function movies({moviesJSON,formatsJSON,locationsJSON,search,sort,limit,selectedFormats,selectedLocations,beginPage,endPage,totalPages,totalMovies}) {
     const appURL = window.REACT_APP.APP_URL;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const movies = moviesJSON === undefined ? null : JSON.parse(moviesJSON);
+    const formats = formatsJSON === undefined ? null : JSON.parse(formatsJSON);
+    const locations = locationsJSON === undefined ? null : JSON.parse(locationsJSON);
 
     useEffect(() => {
         document.title = "Movies";
@@ -69,41 +71,46 @@ export default function movies({moviesJSON}) {
                                     <div className="card card-body shadow p-4 mb-4">
                                         <h4 className="mb-2">Format</h4>
 
-                                        {/*<c:forEach var="format" items="${formats}">
+                                        {formats.map((format) => (
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox"
-                                                       id="format-filter-${format.format_id}" name="formats"
-                                                       value="${format.format_id}"
-                                                <c:if test="${cfn:contains(formatArr, format.format_id)}">checked</c:if>
-                                                    >
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={"format-filter-" + format.format_id}
+                                                    name="formats[]"
+                                                    value={format.format_id}
+                                                    defaultChecked={selectedFormats.includes(format.format_id)}
+                                                />
                                                 <label className="form-check-label"
-                                                       for="format-filter-${format.format_id}">${format.format_name}</label>
+                                                       htmlFor={"format-filter-" + format.format_id}>{format.format_name}</label>
                                             </div>
-                                        </c:forEach>*/}
+                                        ))}
                                     </div>
                                     <div className="card card-body shadow p-4 mb-4">
                                         <h4 className="mb-2">Location</h4>
 
-                                        {/*<c:forEach var="location" items="${locations}">
+                                        {locations.map((location) => (
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox"
-                                                       id="location-filter-${location.location_id}" name="locations"
-                                                       value="${location.location_id}"
-                                                <c:if
-                                                    test="${cfn:contains(locationArr, location.location_id)}">checked
-                                                </c:if>
-                                                    >
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={"location-filter-" + location.location_id}
+                                                    name="locations[]"
+                                                    value={location.location_id}
+                                                    defaultChecked={selectedLocations.includes(location.location_id)}
+                                                />
                                                 <label className="form-check-label"
-                                                       for="location-filter-${location.location_id}">${location.location_name}</label>
+                                                       htmlFor={"location-filter-" + location.location_id}>{location.location_name}</label>
                                             </div>
-                                        </c:forEach>*/}
+                                        ))}
                                     </div>
 
                                     <div className="card card-body shadow p-4 mb-4">
                                         <h4 className="mb-2">Show</h4>
 
-                                        <select className="form-select js-choice z-index-9" aria-label=".form-select-sm" id="limit" name="limit">
-                                            <option value="0" defaultValue>All</option>
+                                        <select className="form-select js-choice z-index-9" aria-label=".form-select-sm"
+                                                id="limit" name="limit" defaultValue={limit}>
+                                            <option value="0">All</option>
                                             <option value="10">10</option>
                                             <option value="20">20</option>
                                             <option value="50">50</option>
@@ -115,8 +122,9 @@ export default function movies({moviesJSON}) {
                                     <div className="card card-body shadow p-4 mb-4">
                                         <h4 className="mb-2">Sort</h4>
 
-                                        <select className="form-select js-choice z-index-9" aria-label=".form-select-sm" id="sort" name="sort">
-                                            <option value="default" defaultValue>Default</option>
+                                        <select className="form-select js-choice z-index-9" aria-label=".form-select-sm"
+                                                id="sort" name="sort" defaultValue={sort}>
+                                            <option value="default">Default</option>
                                             <option value="title">Title</option>
                                             <option value="genre">Genre</option>
                                             <option value="year">Year</option>
@@ -128,7 +136,7 @@ export default function movies({moviesJSON}) {
                                     <div className="card card-body shadow p-4 mb-4">
                                         <h4 className="mb-2">Search</h4>
 
-                                        <input type="search" className="form-control" placeholder="Search..." aria-label="Search" name="search"/>
+                                        <input type="search" className="form-control" placeholder="Search..." aria-label="Search" name="search" defaultValue={search}/>
                                     </div>
                                     <div className="d-grid text-center m-4">
                                         <button type="submit" className="btn btn-primary">Filter Results</button>

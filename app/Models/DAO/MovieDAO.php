@@ -41,6 +41,33 @@ class MovieDAO
         return $movies;
     }
 
+    public static function GetAllMovieFiltered(int $offset, int $limit, string $formats, string $locations, string $search, string $sort): array
+    {
+        $movies = [];
+
+        $conn = MySQLConnect::GetMb3Connection();
+
+        $result = $conn->query("CALL sp_get_all_movies_filtered(%s,%s,%s,%s,%s,%s)", $offset, $limit, $formats, $locations, $search, $sort);
+
+        foreach ($result as $row) {
+            $movie = new Movie();
+
+            $movie->setMovieId($row["movie_id"]);
+            $movie->setTitle($row["title"]);
+            $movie->setGenre($row["genre"]);
+            $movie->setSubGenre(($row["sub_genre"] == null) ? "" : $row["sub_genre"]);
+            $movie->setReleaseYear(($row["release_year"] == null) ? 0 : $row["release_year"]);
+            $movie->setLocationName($row["location_name"]);
+            $movie->setFormatName($row["format_name"]);
+
+            $movies[] = $movie;
+        }
+
+        $conn->disconnect();
+
+        return $movies;
+    }
+
     public static function GetMovieById(int $id): ?Movie
     {
         $movie = new Movie();
@@ -262,5 +289,16 @@ class MovieDAO
         $conn->disconnect();
 
         return true;
+    }
+
+    public static function GetMovieCount(string $formats, string $locations, string $search): int
+    {
+        $conn = MySQLConnect::GetMb3Connection();
+
+        $result = $conn->query("CALL sp_get_total_movies(%s,%s,%s)", $formats, $locations, $search);
+
+        $conn->disconnect();
+
+        return $result[0]["count"];
     }
 }
