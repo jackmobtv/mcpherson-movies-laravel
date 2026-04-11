@@ -1,7 +1,8 @@
 import {useEffect} from "react";
 import Layout from "@src/js/components/Layout.jsx";
+import Pagination from "@src/js/components/MoviePagination.jsx";
 
-export default function movies({moviesJSON,formatsJSON,locationsJSON,search,sort,limit,selectedFormats,selectedLocations,beginPage,endPage,totalPages,totalMovies}) {
+export default function movies({moviesJSON,formatsJSON,locationsJSON,search,sort,limit,selectedFormats,selectedLocations,beginPage,endPage,totalPages,totalMovies,page}) {
     const appURL = window.REACT_APP.APP_URL;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const movies = moviesJSON === undefined ? null : JSON.parse(moviesJSON);
@@ -32,9 +33,15 @@ export default function movies({moviesJSON,formatsJSON,locationsJSON,search,sort
                 </div>
                 <div className="row">
                     <div className="col-lg-9">
+                        {(limit !== 0) &&
+                            <div className="col d-flex justify-content-between align-items-center">
+                                <Pagination beginPage={beginPage} endPage={endPage} totalPages={totalPages} formats={selectedFormats}
+                                            locations={selectedLocations} search={search} limit={limit} sort={sort} page={page}/>
+                            </div>
+                        }
                         <div className="table-responsive small">
                             <table className="table table-striped table-sm">
-                                <thead>
+                            <thead>
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col">Genre</th>
@@ -58,6 +65,10 @@ export default function movies({moviesJSON,formatsJSON,locationsJSON,search,sort
                                 </tbody>
                             </table>
                         </div>
+                        {(limit !== 0) &&
+                            <Pagination beginPage={beginPage} endPage={endPage} totalPages={totalPages} formats={selectedFormats}
+                                        locations={selectedLocations} search={search} limit={limit} sort={sort} page={page}/>
+                        }
                     </div>
                     <div className="col-lg-3">
                         <div className="offcanvas-lg offcanvas-end" tabIndex="-1" id="offcanvasSidebar">

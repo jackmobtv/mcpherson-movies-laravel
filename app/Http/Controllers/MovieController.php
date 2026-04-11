@@ -69,7 +69,7 @@ class MovieController extends Controller
             $page = intval($pageStr);
         } catch (Exception){}
 
-        if ($page < 1) {
+        if ($page <= 1) {
             $page = 1;
         } else if ($page > $totalPages) {
             $page = $totalPages;
@@ -94,6 +94,9 @@ class MovieController extends Controller
         $beginPage = max(1, $beginPage);
         $endPage = min($totalPages, $endPage);
 
+        $totalPages = floor($totalPages);
+
+        $Attributes['page'] = $page;
         $Attributes['beginPage'] = $beginPage;
         $Attributes['endPage'] = $endPage;
         $Attributes['totalPages'] = $totalPages;
