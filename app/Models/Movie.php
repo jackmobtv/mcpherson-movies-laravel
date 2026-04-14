@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use AllowDynamicProperties;
-use JsonSerializable;
 
 #[AllowDynamicProperties]
-class Movie extends JSONClass implements JsonSerializable
+class Movie extends JSONClass
 {
     private int $movie_id;
     private string $title;
@@ -108,22 +107,5 @@ class Movie extends JSONClass implements JsonSerializable
     public function setFormatName(string $format_name): void
     {
         $this->format_name = $format_name;
-    }
-
-    public function serialize(): string
-    {
-        $serializedData = [
-            'movie_id' => $this->movie_id,
-            'title' => $this->title,
-            'genre' => $this->genre,
-            'sub_genre' => $this->sub_genre,
-            'release_year' => $this->release_year,
-            'location_id' => $this->location_id,
-            'format_id' => $this->format_id,
-            'location_name' => $this->location_name,
-            'format_name' => $this->format_name
-        ];
-
-        return json_encode($serializedData);
     }
 }

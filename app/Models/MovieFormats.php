@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use JsonSerializable;
-
 class MovieFormats extends JSONClass
 {
     private int $format_id;
@@ -40,16 +38,5 @@ class MovieFormats extends JSONClass
     public function setFormatDescription(string $format_description): void
     {
         $this->format_description = $format_description;
-    }
-
-    public function serialize(): string
-    {
-        $serializedData = [
-            'format_id' => $this->format_id,
-            'format_name' => $this->format_name,
-            'format_description' => $this->format_description
-        ];
-
-        return json_encode($serializedData);
     }
 }

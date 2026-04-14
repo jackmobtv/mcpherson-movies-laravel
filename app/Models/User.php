@@ -172,25 +172,4 @@ class User extends JSONClass
     {
         $this->description = $description;
     }
-
-    public function serialize(): string
-    {
-        $serializedData = [
-            'userId' => $this->userId,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'language' => $this->language,
-            'status' => $this->status,
-            'privileges' => $this->privileges,
-            'createdAt' => $this->createdAt,
-            'timezone' => $this->timezone,
-            'dateofbirth' => $this->dateofbirth,
-            'pronouns' => $this->pronouns,
-            'description' => $this->description,
-        ];
-
-        return json_encode($serializedData);
-    }
 }

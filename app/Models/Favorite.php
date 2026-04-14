@@ -28,14 +28,4 @@ class Favorite extends JSONClass
     {
         $this->movie_id = $movie_id;
     }
-
-    public function serialize(): string
-    {
-        $serializedData = [
-            'movie_id' => $this->movie_id,
-            'user_id' => $this->user_id
-        ];
-
-        return json_encode($serializedData);
-    }
 }

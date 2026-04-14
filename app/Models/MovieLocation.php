@@ -57,15 +57,4 @@ class MovieLocation extends JSONClass
     {
         $this->location_description = $location_description;
     }
-
-    public function serialize(): string
-    {
-        $serializedData = [
-            'location_id' => $this->location_id,
-            'location_name' => $this->location_name,
-            'location_description' => $this->location_description
-        ];
-
-        return json_encode($serializedData);
-    }
 }

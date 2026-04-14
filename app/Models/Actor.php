@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use AllowDynamicProperties;
-use JsonSerializable;
 
 #[AllowDynamicProperties]
 class Actor extends JSONClass
@@ -31,15 +30,5 @@ class Actor extends JSONClass
     public function setActorName(string $actor_name): void
     {
         $this->actor_name = $actor_name;
-    }
-
-    public function serialize(): string
-    {
-        $serializedData = [
-            'actor_id' => $this->actor_id,
-            'actor_name' => $this->actor_name
-        ];
-
-        return json_encode($serializedData);
     }
 }
