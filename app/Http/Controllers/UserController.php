@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\DAO\FavoriteDAO;
 use App\Models\DAO\UserDAO;
 use App\Models\shared\Validators;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Inertia\Inertia;
 use Inertia\Response;
+use Mockery\Exception;
 
 class UserController extends Controller
 {
@@ -115,6 +118,35 @@ class UserController extends Controller
             return Inertia::render('users/admin_users', $Attributes);
         } else {
             session()->put('flashMessageDanger', "You must be an Admin to Access this Page");
+            return redirect("/");
+        }
+    }
+
+    public function Deactivate_User_Post(Request $request) : RedirectResponse | Redirector | Response
+    {
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user != null && $user->getStatus() == "active" && $user->getPrivileges() == "Admin") {
+            try {
+                $id = intval($request->post('id'));
+
+                $userCheck = UserDAO::get($id);
+                if($userCheck == null){
+                    throw new Exception("User Not Found");
+                }
+
+                if($userCheck->getStatus() == "active"){
+                    UserDAO::deactivate($id);
+                } else {
+                    UserDAO::activate($id);
+                }
+            } catch (Exception){
+                session()->put('flashMessageDanger', "Action Failed");
+                return redirect("/users");
+            }
+            return redirect("/users");
+        } else {
+            session()->put('flashMessageDanger', "You must be an Admin to Access this Function");
             return redirect("/");
         }
     }

@@ -27,6 +27,7 @@ Route::controller(UserController::class)->group(function (){
     Route::get('/favorites', 'Favorites')->name('Favorites');
 
     Route::get('/users', 'Users')->name('Users');
+    Route::post('/users', 'Deactivate_User_Post')->name('Deactivate_User_Post');
 });
 
 Route::controller(MovieController::class)->group(function (){

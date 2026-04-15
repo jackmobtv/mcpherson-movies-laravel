@@ -71,6 +71,7 @@ export default function admin_users({usersJSON}) {
                                                 <td>
                                                     <a href={appURL + "/edit-users?id=" + user.userId} className="btn btn-sm btn-outline-warning my-1">Edit</a>
                                                     <form action={appURL + "/users"} method="POST">
+                                                        <input type="hidden" name="_token" value={csrfToken} />
                                                         <input type="hidden" name="id" id="id" value={user.userId}/>
                                                         <button type="submit" className="btn btn-sm btn-outline-danger">
                                                             {(user.status === "inactive") ? (

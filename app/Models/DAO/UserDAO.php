@@ -131,4 +131,24 @@ class UserDAO
             return null;
         }
     }
+
+    public static function deactivate(int $userId) : bool {
+        $conn = MySQLConnect::GetConnection();
+
+        $conn->query("CALL sp_deactivate_user(%s)", $userId);
+
+        $conn->disconnect();
+
+        return true;
+    }
+
+    public static function activate(int $userId) : bool {
+        $conn = MySQLConnect::GetConnection();
+
+        $conn->query("CALL sp_activate_user(%s)", $userId);
+
+        $conn->disconnect();
+
+        return true;
+    }
 }
