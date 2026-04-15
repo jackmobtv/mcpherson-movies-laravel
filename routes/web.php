@@ -25,6 +25,8 @@ Route::controller(UserController::class)->group(function (){
     Route::get('/logout', 'Logout')->name('Logout');
 
     Route::get('/favorites', 'Favorites')->name('Favorites');
+
+    Route::get('/users', 'Users')->name('Users');
 });
 
 Route::controller(MovieController::class)->group(function (){

@@ -62,12 +62,8 @@ export default function Layout({children, UserJSON}) {
                                 </li>
                             }
                             {(currentUser.privileges === "Admin") &&
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                       aria-expanded="false">Admin</a>
-                                    <ul className="dropdown-menu">
-                                        <li><a className="dropdown-item" href={appURL + "/users"}>Users</a></li>
-                                    </ul>
+                                <li className="nav-item">
+                                    <a className="nav-link" href={appURL + "/users"}>Users</a>
                                 </li>
                             }
                         </ul>

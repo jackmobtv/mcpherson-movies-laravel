@@ -66,4 +66,69 @@ class UserDAO
 
         return true;
     }
+
+    public static function getAll() : array
+    {
+        $users = [];
+
+        $conn = MySQLConnect::GetConnection();
+
+        $result = $conn->query("CALL sp_get_all_users(0,0)");
+
+        foreach($result as $row){
+            $user = new User();
+
+            $user->setUserId($row['user_id']);
+            $user->setFirstName($row['first_name']);
+            $user->setLastName($row['last_name']);
+            $user->setPhone($row['phone'] == null ? null : $result[0]['phone']);
+            $user->setEmail($row['email']);
+            $user->setLanguage($row['language']);
+            $user->setStatus($row['status']);
+            $user->setPrivileges($row['role_name']);
+            $user->setCreatedAt(new DateTime($row['created_at']));
+            $user->setTimezone($row['timezone']);
+            $user->setDateofbirth(new DateTime($row['dateofbirth']));
+            $user->setPronouns($row['pronouns']);
+            $user->setDescription($row['description']);
+
+            $users[] = $user;
+        }
+
+        $conn->disconnect();
+
+        return $users;
+    }
+
+    public static function get($id) : ?User {
+        $conn = MySQLConnect::GetConnection();
+
+        try {
+            $result = $conn->query("CALL sp_get_user_by_id(%s)", $id);
+
+            if($result != null){
+                $user = new User();
+
+                $user->setUserId($result[0]['user_id']);
+                $user->setFirstName($result[0]['first_name']);
+                $user->setLastName($result[0]['last_name']);
+                $user->setPhone($result[0]['phone'] == null ? null : $result[0]['phone']);
+                $user->setEmail($result[0]['email']);
+                $user->setLanguage($result[0]['language']);
+                $user->setStatus($result[0]['status']);
+                $user->setPrivileges($result[0]['role_name']);
+                $user->setCreatedAt(new DateTime($result[0]['created_at']));
+                $user->setTimezone($result[0]['timezone']);
+                $user->setDateofbirth(new DateTime($result[0]['dateofbirth']));
+                $user->setPronouns($result[0]['pronouns']);
+                $user->setDescription($result[0]['description']);
+
+                return $user;
+            } else {
+                return null;
+            }
+        } catch (Exception $ex) {
+            return null;
+        }
+    }
 }

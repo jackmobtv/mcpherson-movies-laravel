@@ -102,4 +102,20 @@ class UserController extends Controller
             return redirect('/login');
         }
     }
+
+    public function Users() : RedirectResponse | Redirector | Response
+    {
+        $Attributes = [];
+
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user != null && $user->getStatus() == "active" && $user->getPrivileges() == "Admin") {
+            $users = UserDAO::getAll();
+            $Attributes['usersJSON'] = json_encode($users);
+            return Inertia::render('users/admin_users', $Attributes);
+        } else {
+            session()->put('flashMessageDanger', "You must be an Admin to Access this Page");
+            return redirect("/");
+        }
+    }
 }
