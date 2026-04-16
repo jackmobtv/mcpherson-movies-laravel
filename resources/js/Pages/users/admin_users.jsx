@@ -25,7 +25,7 @@ export default function admin_users({usersJSON}) {
     }
 
     useEffect(() => {
-        document.title = "";
+        document.title = "Users";
 
         const appDiv = document.getElementById('app');
         if (appDiv) {

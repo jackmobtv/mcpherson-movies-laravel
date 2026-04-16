@@ -132,6 +132,38 @@ class UserDAO
         }
     }
 
+    public static function getByEmail($email) : ?User {
+        $conn = MySQLConnect::GetConnection();
+
+        try {
+            $result = $conn->query("CALL sp_get_user_by_email(%s)", $email);
+
+            if($result != null){
+                $user = new User();
+
+                $user->setUserId($result[0]['user_id']);
+                $user->setFirstName($result[0]['first_name']);
+                $user->setLastName($result[0]['last_name']);
+                $user->setPhone($result[0]['phone'] == null ? null : $result[0]['phone']);
+                $user->setEmail($result[0]['email']);
+                $user->setLanguage($result[0]['language']);
+                $user->setStatus($result[0]['status']);
+                $user->setPrivileges($result[0]['role_name']);
+                $user->setCreatedAt(new DateTime($result[0]['created_at']));
+                $user->setTimezone($result[0]['timezone']);
+                $user->setDateofbirth(new DateTime($result[0]['dateofbirth']));
+                $user->setPronouns($result[0]['pronouns']);
+                $user->setDescription($result[0]['description']);
+
+                return $user;
+            } else {
+                return null;
+            }
+        } catch (Exception $ex) {
+            return null;
+        }
+    }
+
     public static function deactivate(int $userId) : bool {
         $conn = MySQLConnect::GetConnection();
 
@@ -146,6 +178,17 @@ class UserDAO
         $conn = MySQLConnect::GetConnection();
 
         $conn->query("CALL sp_activate_user(%s)", $userId);
+
+        $conn->disconnect();
+
+        return true;
+    }
+
+    public static function update(User $user) : bool {
+        $conn = MySQLConnect::GetConnection();
+
+        $conn->query("CALL sp_update_user_profile(%s,%s,%s,%s,%s,%s,%s,%s,%s)", $user->getUserId(),$user->getFirstName(),$user->getLastName(),
+            $user->getEmail(), $user->getPhone(),$user->getLanguage(),$user->getTimezone(),$user->getPronouns(),$user->getDescription());
 
         $conn->disconnect();
 

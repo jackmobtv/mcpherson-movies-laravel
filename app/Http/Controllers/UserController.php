@@ -150,4 +150,58 @@ class UserController extends Controller
             return redirect("/");
         }
     }
+
+    public function Edit_Profile_Get() : RedirectResponse | Redirector | Response
+    {
+        $Attributes = [];
+
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user != null) {
+            $Attributes['userJSON'] = json_encode($user);
+            return Inertia::render('users/edit_profile', $Attributes);
+        } else {
+            session()->put('flashMessageDanger', "You must be Logged in to Access this Page");
+            return redirect("/login");
+        }
+    }
+
+    public function Edit_Profile_Post(Request $request) : RedirectResponse | Redirector | Response
+    {
+        $Attributes = [];
+
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user != null) {
+            $userUpdate = new User();
+            $userUpdate->setUserId($user->getUserId());
+            $userUpdate->setFirstName($request->post('firstName'));
+            $userUpdate->setLastName($request->post('lastName'));
+            $userUpdate->setEmail($request->post('email'));
+            $userUpdate->setPhone($request->post('phone'));
+            $userUpdate->setLanguage($request->post('language'));
+            $userUpdate->setPronouns($request->post('pronouns'));
+            $userUpdate->setDescription($request->post('description'));
+            $userUpdate->setTimezone("America/Chicago");
+
+            try{
+                if($userUpdate->getEmail() == null || (UserDAO::getByEmail($userUpdate->getEmail()) != null && $userUpdate->getEmail() != $user->getEmail())) throw new Exception("Invalid Email");
+                if(!Validators::isValidPhone($userUpdate->getPhone())) throw new Exception("Invalid Phone Number");
+
+                UserDAO::update($userUpdate);
+            } catch (Exception){
+                session()->put('flashMessageDanger', "Failed to Update Profile");
+                return redirect("/edit-profile");
+            }
+
+            session()->invalidate();
+            session()->put('currentUser', UserDAO::get($userUpdate->getUserId()));
+
+            session()->put('flashMessageSuccess', "Account Updated");
+            return redirect("/");
+        } else {
+            session()->put('flashMessageDanger', "You must be Logged in to Access this Page");
+            return redirect("/login");
+        }
+    }
 }

@@ -16,10 +16,10 @@ Route::controller(HomeController::class)->group(function (){
 });
 
 Route::controller(UserController::class)->group(function (){
-    Route::get('/signup', 'SignUp_Get')->name('SignUp');
+    Route::get('/signup', 'SignUp_Get')->name('SignUp_Get');
     Route::post('/signup', 'SignUp_Post')->name('SignUp_Post');
 
-    Route::get('/login', 'Login_Get')->name('Login');
+    Route::get('/login', 'Login_Get')->name('Login_Get');
     Route::post('/login', 'Login_Post')->name('Login_Post');
 
     Route::get('/logout', 'Logout')->name('Logout');
@@ -27,6 +27,10 @@ Route::controller(UserController::class)->group(function (){
     Route::get('/favorites', 'Favorites')->name('Favorites');
 
     Route::get('/users', 'Users')->name('Users');
+
+    Route::get('/edit-profile', 'Edit_Profile_Get')->name('Edit_Profile_Get');
+    Route::post('/edit-profile', 'Edit_Profile_Post')->name('Edit_Profile_Post');
+
     Route::post('/users', 'Deactivate_User_Post')->name('Deactivate_User_Post');
 });
 
@@ -37,7 +41,7 @@ Route::controller(MovieController::class)->group(function (){
     Route::get('/add-movie', 'Add_Movie_Get')->name('Add_Movie_Get');
     Route::post('/add-movie', 'Add_Movie_Post')->name('Add_Movie_Post');
 
-    Route::get('/update-movie', 'Update_Movie_Get')->name('Update_Movie');
+    Route::get('/update-movie', 'Update_Movie_Get')->name('Update_Movie_Get');
     Route::post('/update-movie', 'Update_Movie_Post')->name('Update_Movie_Post');
 
     Route::post('/delete-movie', 'Delete_Movie_Post')->name('Delete_Movie_Post');

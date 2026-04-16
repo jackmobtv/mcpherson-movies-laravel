@@ -10,8 +10,8 @@ export default function Profile_Header({}) {
                         <div className="card card-body">
                             <div className="col d-flex justify-content-between align-items-center">
                                 <div>
-                                    {(currentUser.firstName !== null) &&
-                                        <h4>{currentUser.firstName}</h4>
+                                    {(currentUser.firstName !== null || currentUser.lastName !== null) &&
+                                        <h4>{(currentUser.firstName === null ? "" : currentUser.firstName) + " " + (currentUser.lastName === null ? "" : currentUser.lastName)}</h4>
                                     }
                                 </div>
                                 <button className="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
