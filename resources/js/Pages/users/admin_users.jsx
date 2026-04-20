@@ -1,28 +1,12 @@
 import {useEffect} from "react";
 import "@src/css/home.css"
 import Layout from "@src/js/components/Layout.jsx";
+import displayDate from "@src/js/script/date.js"
 
 export default function admin_users({usersJSON}) {
     const appURL = window.REACT_APP.APP_URL;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const users = usersJSON === undefined ? null : JSON.parse(usersJSON);
-
-    const displayDate = (dateObj) => {
-        console.log(dateObj.date)
-        const date = new Date(dateObj.date + 'Z');
-
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            timeZoneName: 'short'
-        };
-
-        return date.toLocaleString(undefined, options);
-    }
 
     useEffect(() => {
         document.title = "Users";

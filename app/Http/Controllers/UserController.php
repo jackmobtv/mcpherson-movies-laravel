@@ -122,33 +122,14 @@ class UserController extends Controller
         }
     }
 
-    public function Deactivate_User_Post(Request $request) : RedirectResponse | Redirector | Response
+    public function View_Profile(Request $request) : RedirectResponse | Redirector | Response
     {
-        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+        $Attributes = [];
 
-        if($user != null && $user->getStatus() == "active" && $user->getPrivileges() == "Admin") {
-            try {
-                $id = intval($request->post('id'));
+        $user = UserDAO::get(intval($request->query('id')));
+        $Attributes['userJSON'] = json_encode($user);
 
-                $userCheck = UserDAO::get($id);
-                if($userCheck == null){
-                    throw new Exception("User Not Found");
-                }
-
-                if($userCheck->getStatus() == "active"){
-                    UserDAO::deactivate($id);
-                } else {
-                    UserDAO::activate($id);
-                }
-            } catch (Exception){
-                session()->put('flashMessageDanger', "Action Failed");
-                return redirect("/users");
-            }
-            return redirect("/users");
-        } else {
-            session()->put('flashMessageDanger', "You must be an Admin to Access this Function");
-            return redirect("/");
-        }
+        return Inertia::render('users/view_profile', $Attributes);
     }
 
     public function Edit_Profile_Get() : RedirectResponse | Redirector | Response
@@ -202,6 +183,35 @@ class UserController extends Controller
         } else {
             session()->put('flashMessageDanger', "You must be Logged in to Access this Page");
             return redirect("/login");
+        }
+    }
+
+    public function Deactivate_User_Post(Request $request) : RedirectResponse | Redirector | Response
+    {
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user != null && $user->getStatus() == "active" && $user->getPrivileges() == "Admin") {
+            try {
+                $id = intval($request->post('id'));
+
+                $userCheck = UserDAO::get($id);
+                if($userCheck == null){
+                    throw new Exception("User Not Found");
+                }
+
+                if($userCheck->getStatus() == "active"){
+                    UserDAO::deactivate($id);
+                } else {
+                    UserDAO::activate($id);
+                }
+            } catch (Exception){
+                session()->put('flashMessageDanger', "Action Failed");
+                return redirect("/users");
+            }
+            return redirect("/users");
+        } else {
+            session()->put('flashMessageDanger', "You must be an Admin to Access this Function");
+            return redirect("/");
         }
     }
 }

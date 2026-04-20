@@ -2,8 +2,8 @@ import {useEffect} from "react";
 import "@src/css/home.css"
 import Layout from "@src/js/components/Layout.jsx";
 import FavoriteList from "@src/js/components/FavoriteList.jsx";
-import Profile_Sidebar from "@src/js/components/Profile_Sidebar.jsx";
-import Profile_Header from "@src/js/components/Profile_Header.jsx";
+import UserSidebar from "@src/js/components/User_Sidebar.jsx";
+import UserHeader from "@src/js/components/User_Header.jsx";
 
 export default function favorites({favoritesJSON}) {
     const appURL = window.REACT_APP.APP_URL;
@@ -22,12 +22,12 @@ export default function favorites({favoritesJSON}) {
     return (
         <Layout>
             <main>
-                <Profile_Header/>
+                <UserHeader/>
 
                 <section className="pt-0">
                     <div className="container">
                         <div className="row">
-                            <Profile_Sidebar/>
+                            <UserSidebar/>
 
                             <div className="col-lg-9">
                                 <div className="card bg-transparent border rounded-3">

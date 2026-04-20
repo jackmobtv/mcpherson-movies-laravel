@@ -27,6 +27,7 @@ Route::controller(UserController::class)->group(function (){
     Route::get('/favorites', 'Favorites')->name('Favorites');
 
     Route::get('/users', 'Users')->name('Users');
+    Route::get('/view-profile', 'View_Profile')->name('View_Profile');
 
     Route::get('/edit-profile', 'Edit_Profile_Get')->name('Edit_Profile_Get');
     Route::post('/edit-profile', 'Edit_Profile_Post')->name('Edit_Profile_Post');
