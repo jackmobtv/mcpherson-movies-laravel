@@ -25,6 +25,7 @@ Route::controller(UserController::class)->group(function (){
     Route::get('/logout', 'Logout')->name('Logout');
 
     Route::get('/favorites', 'Favorites')->name('Favorites');
+    Route::get('/view-profile/favorites', 'User_Favorites')->name('User_Favorites');
 
     Route::get('/users', 'Users')->name('Users');
     Route::get('/view-profile', 'View_Profile')->name('View_Profile');
