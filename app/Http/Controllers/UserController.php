@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use Mockery\Exception;
@@ -229,5 +230,41 @@ class UserController extends Controller
             session()->put('flashMessageDanger', "You must be an Admin to Access this Function");
             return redirect("/");
         }
+    }
+
+    public function Delete_Account_Get() : RedirectResponse | Redirector | Response
+    {
+        $Attributes = [];
+
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+
+        if($user == null) {
+            session()->put('flashMessageWarning', "You Must Be Logged In");
+            return redirect("/login");
+        } else if ($user->getStatus() != "active") {
+            session()->put('flashMessageDanger', "Your Account is Locked or Inactive");
+            return redirect("/");
+        }
+
+        return Inertia::render('users/delete_account', $Attributes);
+    }
+
+    public function Delete_Account_Post(Request $request) : RedirectResponse | Redirector | Response
+    {
+        $user = session()->get("currentUser") != null ? session()->get("currentUser") : null;
+        $email = $request->post('email');
+        $password = $request->post('password');
+
+        try {
+            if($user->getEmail() != $email || !UserDAO::delete($user->getEmail(), $password)) throw new Exception("Invalid Credentials");
+        } catch (Exception){
+            session()->put('flashMessageDanger', "Invalid Email or Password");
+            return redirect("/delete-account");
+        }
+
+        session()->invalidate();
+        session()->put('flashMessageSuccess', "Account Successfully Deleted");
+
+        return redirect("/");
     }
 }

@@ -1,4 +1,6 @@
-export default function User_Header({}) {
+import {fullName} from "@src/js/script/helpers.js";
+
+export default function UserHeader({}) {
     const appURL = window.REACT_APP.APP_URL;
     const currentUser = window.REACT_APP.CURRENT_USER;
 
@@ -11,7 +13,7 @@ export default function User_Header({}) {
                             <div className="col d-flex justify-content-between align-items-center">
                                 <div>
                                     {(currentUser.firstName !== null || currentUser.lastName !== null) &&
-                                        <h4>{(currentUser.firstName === null ? "" : currentUser.firstName) + " " + (currentUser.lastName === null ? "" : currentUser.lastName)}</h4>
+                                        <h4>{fullName(currentUser)}</h4>
                                     }
                                 </div>
                                 <button className="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">

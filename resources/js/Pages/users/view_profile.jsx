@@ -1,22 +1,14 @@
 import {useEffect} from "react";
 import "@src/css/home.css"
 import Layout from "@src/js/components/Layout.jsx";
-import ProfileSidebar from "@src/js/components/Profile_Sidebar.jsx"
-import ProfileHeader from "@src/js/components/Profile_Header.jsx"
-import displayDate from "@src/js/script/date.js";
+import ProfileSidebar from "@src/js/components/ProfileSidebar.jsx"
+import ProfileHeader from "@src/js/components/ProfileHeader.jsx"
+import {displayDate, fullName} from "@src/js/script/helpers.js";
 
 export default function view_profile({userJSON}) {
     const appURL = window.REACT_APP.APP_URL;
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const user = userJSON === undefined ? null : JSON.parse(userJSON);
-
-    const fullName = () => {
-        let fullName = "Anonymous";
-
-        if(user.firstName != null || user.lastName != null) fullName = user.firstName + " " + user.lastName;
-
-        return fullName.trim();
-    }
 
     useEffect(() => {
         document.title = "Profile";
@@ -49,7 +41,7 @@ export default function view_profile({userJSON}) {
                                             <>
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div className="d-flex align-items-center">
-                                                        <h3 className="mb-0">{fullName()}</h3>
+                                                        <h3 className="mb-0">{fullName(user)}</h3>
                                                         <p className="mb-0 mx-3 text-secondary">
                                                             <i>{displayDate(user.dateofbirth)}</i>
                                                         </p>

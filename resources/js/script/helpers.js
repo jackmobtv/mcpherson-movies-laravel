@@ -1,4 +1,13 @@
-export default function displayDate(dateObj) {
+function fullName(user) {
+    let fullName = "Anonymous";
+
+    if(user.firstName != null || user.lastName != null) fullName = user.firstName + " " + user.lastName;
+
+    return fullName.trim();
+}
+export {fullName as fullName}
+
+function displayDate(dateObj) {
     console.log(dateObj.date)
     const date = new Date(dateObj.date + 'Z');
 
@@ -14,3 +23,4 @@ export default function displayDate(dateObj) {
 
     return date.toLocaleString(undefined, options);
 }
+export {displayDate as displayDate}

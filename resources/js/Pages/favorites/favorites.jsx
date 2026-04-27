@@ -2,8 +2,8 @@ import {useEffect} from "react";
 import "@src/css/home.css"
 import Layout from "@src/js/components/Layout.jsx";
 import FavoriteList from "@src/js/components/FavoriteList.jsx";
-import UserSidebar from "@src/js/components/User_Sidebar.jsx";
-import UserHeader from "@src/js/components/User_Header.jsx";
+import UserSidebar from "@src/js/components/UserSidebar.jsx";
+import UserHeader from "@src/js/components/UserHeader.jsx";
 
 export default function favorites({favoritesJSON}) {
     const appURL = window.REACT_APP.APP_URL;

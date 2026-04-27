@@ -21,18 +21,19 @@ Route::controller(UserController::class)->group(function (){
 
     Route::get('/login', 'Login_Get')->name('Login_Get');
     Route::post('/login', 'Login_Post')->name('Login_Post');
-
     Route::get('/logout', 'Logout')->name('Logout');
-
-    Route::get('/favorites', 'Favorites')->name('Favorites');
-    Route::get('/view-profile/favorites', 'User_Favorites')->name('User_Favorites');
 
     Route::get('/users', 'Users')->name('Users');
     Route::get('/view-profile', 'View_Profile')->name('View_Profile');
 
+    Route::get('/favorites', 'Favorites')->name('Favorites');
+    Route::get('/view-profile/favorites', 'User_Favorites')->name('User_Favorites');
+
     Route::get('/edit-profile', 'Edit_Profile_Get')->name('Edit_Profile_Get');
     Route::post('/edit-profile', 'Edit_Profile_Post')->name('Edit_Profile_Post');
 
+    Route::get('/delete-account', 'Delete_Account_Get')->name('Delete_Account_Get');
+    Route::post('/delete-account', 'Delete_Account_Post')->name('Delete_Account_Post');
     Route::post('/users', 'Deactivate_User_Post')->name('Deactivate_User_Post');
 });
 

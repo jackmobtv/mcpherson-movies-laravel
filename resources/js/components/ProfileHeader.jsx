@@ -1,4 +1,4 @@
-export default function Profile_Header({}) {
+export default function ProfileHeader({}) {
     const appURL = window.REACT_APP.APP_URL;
 
     return (

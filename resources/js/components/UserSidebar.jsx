@@ -1,4 +1,4 @@
-export default function User_Sidebar({}) {
+export default function UserSidebar({}) {
     const appURL = window.REACT_APP.APP_URL;
     const pageTitle = document.title;
 

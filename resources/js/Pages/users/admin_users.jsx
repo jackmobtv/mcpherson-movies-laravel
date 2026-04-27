@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import "@src/css/home.css"
 import Layout from "@src/js/components/Layout.jsx";
-import displayDate from "@src/js/script/date.js"
+import {displayDate} from "@src/js/script/helpers.js"
 
 export default function admin_users({usersJSON}) {
     const appURL = window.REACT_APP.APP_URL;
@@ -68,7 +68,7 @@ export default function admin_users({usersJSON}) {
                                                 </td>
                                                 <td>{user.firstName}</td>
                                                 <td>{user.lastName}</td>
-                                                <td>{user.email}</td>
+                                                <td><a href={appURL + "/view-profile?id=" + user.userId}>{user.email}</a></td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.language}</td>
                                                 <td>{user.status}</td>

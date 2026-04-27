@@ -2,8 +2,8 @@ import {useEffect} from "react";
 import "@src/css/home.css"
 import Layout from "@src/js/components/Layout.jsx";
 import FavoriteList from "@src/js/components/FavoriteList.jsx";
-import ProfileSidebar from "@src/js/components/Profile_Sidebar.jsx"
-import ProfileHeader from "@src/js/components/Profile_Header.jsx"
+import ProfileSidebar from "@src/js/components/ProfileSidebar.jsx"
+import ProfileHeader from "@src/js/components/ProfileHeader.jsx"
 
 export default function user_favorites({userJSON, favoritesJSON}) {
     const appURL = window.REACT_APP.APP_URL;
@@ -12,7 +12,7 @@ export default function user_favorites({userJSON, favoritesJSON}) {
     const favorites = favoritesJSON === undefined ? null : JSON.parse(favoritesJSON);
 
     useEffect(() => {
-        document.title = "";
+        document.title = "Favorites";
 
         const appDiv = document.getElementById('app');
         if (appDiv) {

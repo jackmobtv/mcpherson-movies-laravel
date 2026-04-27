@@ -194,4 +194,16 @@ class UserDAO
 
         return true;
     }
+
+    public static function delete(string $email, string $password) : bool {
+        $hashedPassword = hash('sha256', $password);
+
+        $conn = MySQLConnect::GetConnection();
+
+        $conn->query("CALL sp_delete_user(%s,%s)", $email, $hashedPassword);
+
+        $conn->disconnect();
+
+        return true;
+    }
 }
